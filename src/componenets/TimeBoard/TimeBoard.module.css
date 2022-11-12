@@ -1,0 +1,11 @@
+.board {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}

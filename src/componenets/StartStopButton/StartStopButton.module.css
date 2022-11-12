@@ -1,0 +1,22 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 200px;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+}
+
+.btn:hover {
+    border: 1px solid white;
+    color: white;
+  }
+.btnStart {
+    background-color: green;
+}
+.btnStop {
+    background-color: red;
+}
