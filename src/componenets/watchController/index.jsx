@@ -29,28 +29,27 @@ class WatchController extends Component {
         clearInterval(this.timeInterval);
     }
     
-    start = () => {
-        if (this.state.isRunning) {
-            clearInterval(this.timeInterval);    
-        }
+    startStop = () => {
         const newState = {
             ...this.state, 
-            time : 0,
-            isRunning : true,
+            isRunning : !this.state.isRunning,
         };
         this.setState(newState);
-        this.timeInterval = setInterval(this.tick, TIME_INCREMENT);   
-    }
-
-    stop = () => {
         if (this.state.isRunning) {
             clearInterval(this.timeInterval);    
-            const newState = {
-                ...this.state, 
-                isRunning : false,
-            };
-            this.setState(newState);
+        } else {
+            this.timeInterval = setInterval(this.tick, TIME_INCREMENT);
         }   
+    }
+
+    reset = () => {
+        clearInterval(this.timeInterval);
+        const newState = {
+            time : 0,
+            isRunning : false,
+        };
+        this.setState(newState);
+
     }
 
     render() {
@@ -58,8 +57,16 @@ class WatchController extends Component {
             <div className={styles.container}>
                 <TimeBoard time={this.state.time} />
                 <div className={styles.btnContainer}>
-                    <StartStopButton btnName='Start' onClick={this.start}/>
-                    <StartStopButton btnName='Stop' onClick={this.stop}/>    
+                    {/*<StartStopButton btnName='Start' onClick={this.start}/>*/}
+                    {/*<StartStopButton btnName='Stop' onClick={this.stop}/>*/} 
+                    <StartStopButton 
+                        btnName={this.state.isRunning ? 'Stop' : 'Start'} 
+                        onClick={this.startStop}
+                    />
+                    <StartStopButton 
+                        btnName='Reset' 
+                        onClick={this.reset}
+                    />   
                 </div>
                  
             </div>
@@ -69,17 +76,26 @@ class WatchController extends Component {
 
 export default WatchController;
 
-// startStop = () => {
-//        
-//     const newState = {
-//         ...this.state, 
-//         isRunning : !this.state.isRunning,
-//     };
-//     this.setState(newState);
-//     if (this.state.isRunning) {
-//         clearInterval(this.timeInterval);    
-//     } else {
-//         this.timeInterval = setInterval(this.tick, TIME_INCREMENT);
-//     }
-    
-// }
+// start = () => {
+    //     if (this.state.isRunning) {
+    //         clearInterval(this.timeInterval);    
+    //     }
+    //     const newState = {
+    //         ...this.state, 
+    //         time : 0,
+    //         isRunning : true,
+    //     };
+    //     this.setState(newState);
+    //     this.timeInterval = setInterval(this.tick, TIME_INCREMENT);   
+    // }
+
+    // stop = () => {
+    //     if (this.state.isRunning) {
+    //         clearInterval(this.timeInterval);    
+    //         const newState = {
+    //             ...this.state, 
+    //             isRunning : false,
+    //         };
+    //         this.setState(newState);
+    //     }   
+    // }
