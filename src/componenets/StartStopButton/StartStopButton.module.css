@@ -26,3 +26,6 @@
 .btnLap {
     background-color: yellowgreen;
 }
+.btnDisabled {
+    display: none;
+}
