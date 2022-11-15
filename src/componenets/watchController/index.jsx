@@ -27,7 +27,9 @@ class WatchController extends Component {
         }));
         //debugger;
     }
-    
+    componentDidMount() {
+        this.startStop();
+    }
     componentDidUpdate() {
         console.log('WatchController DidUpdate');    
     }
