@@ -5,18 +5,19 @@ import styles from './WatchController.module.css';
 import LapList from '../LapsList/LapList';
 
 const TIME_TICK_INTERVAL = 1000;
+const initialState = {
+    startTimerTime: 0,
+    workingTimerTime: 0,
+    startLapTime: 0,
+    currentTime : 0,
+    isRunning : false,
+    laps : [],
+};
 
 class WatchController extends Component {
     constructor() {
         super();
-        this.state = {
-            startTimerTime: 0,
-            workingTimerTime: 0,
-            startLapTime: 0,
-            currentTime : 0,
-            isRunning : false,
-            laps : [],
-        };
+        this.state = initialState;
         this.timeInterval = null;
     }
     tick = () => {
@@ -29,9 +30,12 @@ class WatchController extends Component {
     }
     componentDidMount() {
         this.startStop();
+        //removed strict mode in App
     }
-    componentDidUpdate() {
-        console.log('WatchController DidUpdate');    
+    componentDidUpdate(prevState, currentState) {
+        //console.log('WatchController DidUpdate');
+        //console.log(prevState);
+        //debugger;    
     }
     componentWillUnmount() {
         clearInterval(this.timeInterval);
@@ -41,7 +45,8 @@ class WatchController extends Component {
         
         if (this.state.isRunning) {
             clearInterval(this.timeInterval);    
-        } else {
+        } 
+        else {
             this.timeInterval = setInterval(this.tick, TIME_TICK_INTERVAL);
         };
 
@@ -66,20 +71,13 @@ class WatchController extends Component {
 
     reset = () => {
         clearInterval(this.timeInterval);
-        const newState = {
-            startTimerTime: 0,
-            workingTimerTime: 0,
-            startLapTime: 0,
-            currentTime : 0,
-            isRunning : false,
-            laps : [],
-        };
-        this.setState(newState);
+        this.setState(initialState);
 
     }
 
     addLap = () => {
         //Используем state из callback и получаем проблему, см ниже
+        //const now = this.state.isRunning ? Date.now() : this.state.currentTime;
         const now = Date.now();
         this.setState((state) => ({
             ...state,
@@ -136,27 +134,3 @@ class WatchController extends Component {
 }
 
 export default WatchController;
-
-// start = () => {
-    //     if (this.state.isRunning) {
-    //         clearInterval(this.timeInterval);    
-    //     }
-    //     const newState = {
-    //         ...this.state, 
-    //         time : 0,
-    //         isRunning : true,
-    //     };
-    //     this.setState(newState);
-    //     this.timeInterval = setInterval(this.tick, TIME_INCREMENT);   
-    // }
-
-    // stop = () => {
-    //     if (this.state.isRunning) {
-    //         clearInterval(this.timeInterval);    
-    //         const newState = {
-    //             ...this.state, 
-    //             isRunning : false,
-    //         };
-    //         this.setState(newState);
-    //     }   
-    // }
