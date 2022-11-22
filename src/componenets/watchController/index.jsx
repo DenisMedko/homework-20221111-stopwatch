@@ -8,7 +8,7 @@ const timerMethodEnum = {
     setTimeout : 'setTimeout',
     setInterval : 'setInterval',
 }
-const TIMER_METHOD = timerMethodEnum.setTimeout; //setInterval
+const TIMER_METHOD = timerMethodEnum.setInterval; //setInterval
 
 const TIME_TICK_INTERVAL = 1000;
 
@@ -35,8 +35,10 @@ class WatchController extends Component {
     }
 
     componentDidUpdate() {
+        //debugger;
         if (TIMER_METHOD === 'setTimeout') {
-            this.timeInterval = this.state.isRunning 
+            this.timeInterval = 
+                this.state.isRunning
                 && setTimeout(this.tick, TIME_TICK_INTERVAL);
         }
     }
@@ -52,6 +54,8 @@ class WatchController extends Component {
              currentTime: Date.now(),
          }));
          //debugger;
+         
+        
     }
      
     startStop = () => { 
@@ -84,6 +88,9 @@ class WatchController extends Component {
     }
 
     addLap = () => {
+        if (TIMER_METHOD === 'setTimeout') {
+            clearInterval(this.timeInterval);
+        }
         const now = Date.now();
         this.setState((state) => ({
             ...state,
@@ -100,7 +107,6 @@ class WatchController extends Component {
     }
 
     render() {
-        //debugger;
         const {currentTime, startTimerTime, workingTimerTime, isRunning, laps} = this.state;
         return (
             <div className={styles.container}>
